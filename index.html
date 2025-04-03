@@ -11,14 +11,12 @@
             --primary-color: #4caf50;
             --header-bg: #1e1e1e;
         }
-
         .light-mode {
             --bg-color: #ffffff;
             --text-color: #121212;
             --primary-color: #ff0000;
             --header-bg: #909090;
         }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -27,39 +25,22 @@
             padding: 0;
             text-align: center;
         }
-
         header {
             background: var(--header-bg);
             padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
         }
-
-        #darkModeToggle {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--text-color);
-            padding: 10px 15px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
         .hero {
             padding: 50px;
         }
-
         h2 span {
             color: var(--primary-color);
         }
-
         section {
             padding: 40px;
         }
-
         .project {
             background: var(--header-bg);
             padding: 20px;
@@ -99,12 +80,24 @@
     </section>
 
     <script>
-        // Redirect to CAPTCHA if not verified
-        if (!localStorage.getItem("verifiedHuman")) {
-            sessionStorage.setItem("originalUrl", window.location.href);
-            window.location.href = "https://captcha1-six.vercel.app";
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
         }
 
+        // Check if the user is already verified
+        if (!localStorage.getItem("verifiedHuman")) {
+            if (getQueryParam("verified") === "true") {
+                // If the user just verified, store it in localStorage
+                localStorage.setItem("verifiedHuman", "true");
+            } else {
+                // Redirect to CAPTCHA
+                sessionStorage.setItem("originalUrl", window.location.href);
+                window.location.href = "https://captcha1-six.vercel.app";
+            }
+        }
+
+        // Dark mode toggle
         const darkModeToggle = document.getElementById("darkModeToggle");
         const body = document.body;
 
