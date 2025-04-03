@@ -10,13 +10,21 @@
             --text-color: #ffffff;
             --primary-color: #4caf50;
             --header-bg: #1e1e1e;
+            --toggle-bg: #444;
+            --toggle-circle: #ffcc00;
+            --glow-color: #ffcc00;
         }
+
         .light-mode {
             --bg-color: #ffffff;
             --text-color: #121212;
             --primary-color: #ff0000;
             --header-bg: #909090;
+            --toggle-bg: #ddd;
+            --toggle-circle: #4caf50;
+            --glow-color: #4caf50;
         }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -24,7 +32,9 @@
             margin: 0;
             padding: 0;
             text-align: center;
+            transition: background 0.4s ease, color 0.4s ease;
         }
+
         header {
             background: var(--header-bg);
             padding: 15px;
@@ -32,15 +42,61 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* Cool Dark Mode Toggle */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--toggle-bg);
+            border-radius: 15px;
+            position: relative;
+            transition: background 0.4s ease;
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .toggle-circle {
+            width: 20px;
+            height: 20px;
+            background: var(--toggle-circle);
+            border-radius: 50%;
+            position: absolute;
+            left: 3px;
+            transition: transform 0.4s ease, background 0.4s ease;
+        }
+
+        .light-mode .toggle-circle {
+            transform: translateX(25px);
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            margin-left: 10px;
+            color: var(--text-color);
+            transition: color 0.4s ease;
+        }
+
         .hero {
             padding: 50px;
         }
+
         h2 span {
             color: var(--primary-color);
         }
+
         section {
             padding: 40px;
         }
+
         .project {
             background: var(--header-bg);
             padding: 20px;
@@ -54,7 +110,12 @@
 
     <header>
         <h1>My Portfolio</h1>
-        <button id="darkModeToggle">🌙</button>
+        <div class="toggle-container" id="darkModeToggle">
+            <div class="toggle">
+                <div class="toggle-circle"></div>
+            </div>
+            <span class="toggle-icon">🌙</span>
+        </div>
     </header>
 
     <section class="hero">
@@ -100,18 +161,31 @@
         // Dark mode toggle
         const darkModeToggle = document.getElementById("darkModeToggle");
         const body = document.body;
+        const toggleCircle = document.querySelector(".toggle-circle");
+        const toggleIcon = document.querySelector(".toggle-icon");
 
-        if (localStorage.getItem("theme") === "light") {
-            body.classList.add("light-mode");
-            darkModeToggle.textContent = "☀️";
-        } else {
-            darkModeToggle.textContent = "🌙";
+        function updateTheme() {
+            if (localStorage.getItem("theme") === "light") {
+                body.classList.add("light-mode");
+                toggleIcon.textContent = "☀️";
+            } else {
+                body.classList.remove("light-mode");
+                toggleIcon.textContent = "🌙";
+            }
         }
+
+        updateTheme();
 
         darkModeToggle.addEventListener("click", () => {
             body.classList.toggle("light-mode");
-            localStorage.setItem("theme", body.classList.contains("light-mode") ? "light" : "dark");
-            darkModeToggle.textContent = body.classList.contains("light-mode") ? "☀️" : "🌙";
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("theme", "light");
+                toggleIcon.textContent = "☀️";
+            } else {
+                localStorage.setItem("theme", "dark");
+                toggleIcon.textContent = "🌙";
+            }
         });
     </script>
 
