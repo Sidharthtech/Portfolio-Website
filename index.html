@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* Default Dark Mode Theme */
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --primary-color: #4caf50;
+            --header-bg: #1e1e1e;
+        }
+
+        /* Light Mode */
+        .light-mode {
+            --bg-color: #ffffff;
+            --text-color: #121212;
+            --primary-color: #ff0000;
+            --header-bg: #909090;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        header {
+            background: var(--header-bg);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        #darkModeToggle {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 10px 15px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        #darkModeToggle:hover {
+            transform: scale(1.2);
+        }
+
+        #darkModeToggle:active {
+            transform: rotate(180deg);
+        }
+
+        .hero {
+            padding: 50px;
+        }
+
+        h2 span {
+            color: var(--primary-color);
+        }
+
+        section {
+            padding: 40px;
+        }
+
+        .project {
+            background: var(--header-bg);
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .project h3 {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Portfolio</h1>
+        <button id="darkModeToggle">🌙</button>
+    </header>
+
+    <section class="hero">
+        <h2>Hello, I'm <span>Sidharth H L</span></h2>
+        <p>A Web Developer & Designer</p>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I'm a passionate web developer interested in building modern and responsive websites.</p>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project">
+            <h3>College Prediction System</h3>
+            <p>The project aims at providing the feasible and valid colleges the user can get into based on their KEAM and 12th grade scores.</p>
+        </div>
+        <div class="project">
+            <h3>Real Time CAPTCHA Using Mouse Movements</h3>
+            <p>This project aims at protecting a website from being accessed by bots to prevent server traffic overload by tracking the mouse cursor movements of the users to ascertain whether or not they are human.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: sidharthhl.mec@gmail.com</p>
+    </section>
+
+    <script>
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const body = document.body;
+
+        // Check localStorage for the theme setting
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            darkModeToggle.textContent = "☀️"; // Set sun icon
+        } else {
+            body.classList.remove("light-mode");
+            darkModeToggle.textContent = "🌙"; // Set moon icon
+        }
+
+        // Toggle Dark/Light Mode
+        darkModeToggle.addEventListener("click", () => {
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                darkModeToggle.textContent = "☀️"; // Change to sun icon
+                localStorage.setItem("theme", "light");
+            } else {
+                darkModeToggle.textContent = "🌙"; // Change to moon icon
+                localStorage.setItem("theme", "dark");
+            }
+        });
+    </script>
+
+</body>
+</html>
