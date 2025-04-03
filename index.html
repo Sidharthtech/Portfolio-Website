@@ -4,75 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
-    <script>
-        if (!localStorage.getItem("verifiedHuman")) {
-            window.location.href = "https://captcha1-six.vercel.app?redirect=" + encodeURIComponent(window.location.href);
-        }
-    </script>
     <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --primary-color: #4caf50;
+            --header-bg: #1e1e1e;
+        }
+
+        .light-mode {
+            --bg-color: #ffffff;
+            --text-color: #121212;
+            --primary-color: #ff0000;
+            --header-bg: #909090;
+        }
+
         body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #fff;
             text-align: center;
         }
 
         header {
-            background-color: #ff4444;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
+            background: var(--header-bg);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        #darkModeToggle {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 10px 15px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .hero {
+            padding: 50px;
+        }
+
+        h2 span {
+            color: var(--primary-color);
         }
 
         section {
             padding: 40px;
         }
 
-        h2 {
-            color: #ff4444;
-        }
-
         .project {
-            background: #1e1e1e;
+            background: var(--header-bg);
             padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(255, 68, 68, 0.7);
-        }
-
-        .contact {
-            margin-top: 40px;
+            margin: 10px auto;
+            max-width: 400px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
+
     <header>
-        My Portfolio
+        <h1>My Portfolio</h1>
+        <button id="darkModeToggle">🌙</button>
     </header>
 
-    <section>
-        <h2>Hello, I'm Sidharth H L</h2>
+    <section class="hero">
+        <h2>Hello, I'm <span>Sidharth H L</span></h2>
         <p>A Web Developer & Designer</p>
     </section>
 
-    <section>
+    <section id="projects">
         <h2>Projects</h2>
         <div class="project">
             <h3>College Prediction System</h3>
-            <p>Predicts colleges based on KEAM and 12th grade scores.</p>
+            <p>A tool to predict college admissions based on KEAM and 12th-grade scores.</p>
         </div>
         <div class="project">
-            <h3>Real Time CAPTCHA</h3>
-            <p>Detects bots using mouse movements.</p>
+            <h3>Real-Time CAPTCHA Using Mouse Movements</h3>
+            <p>Detects bot activity based on mouse movements before granting access.</p>
         </div>
     </section>
 
-    <section class="contact">
+    <section id="contact">
         <h2>Contact</h2>
         <p>Email: sidharthhl.mec@gmail.com</p>
     </section>
+
+    <script>
+        // Redirect to CAPTCHA if not verified
+        if (!localStorage.getItem("verifiedHuman")) {
+            sessionStorage.setItem("originalUrl", window.location.href);
+            window.location.href = "https://captcha1-six.vercel.app";
+        }
+
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const body = document.body;
+
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            darkModeToggle.textContent = "☀️";
+        } else {
+            darkModeToggle.textContent = "🌙";
+        }
+
+        darkModeToggle.addEventListener("click", () => {
+            body.classList.toggle("light-mode");
+            localStorage.setItem("theme", body.classList.contains("light-mode") ? "light" : "dark");
+            darkModeToggle.textContent = body.classList.contains("light-mode") ? "☀️" : "🌙";
+        });
+    </script>
+
 </body>
 </html>
